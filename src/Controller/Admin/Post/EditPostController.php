@@ -23,11 +23,16 @@ class EditPostController extends AbstractController
     #[Route('/admin/post/edit/{id}', name: 'edit_post', methods: ['GET', 'POST'])]
     public function editPost(Request $request, int $id): Response
     {
+        if(!in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
+            $this->addFlash('danger', 'Nie masz uprawnień');
+            return $this->redirectToRoute('index');
+        }
+
         $post = $this->postRepository->find($id);
 
         if (!$post) {
-            $this->addFlash('danger', 'Nie znaleziono takiego zadania');
-            return $this->redirectToRoute('index');
+            $this->addFlash('danger', 'Nie znaleziono takiego posta');
+            return $this->redirectToRoute('dashboard');
         }
 
         $form = $this->createForm(EditPostFormType::class, $post);
@@ -37,8 +42,8 @@ class EditPostController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->postRepository->save($post);
 
-            $this->addFlash('success', 'Zaaktualizowano zadanie');
-            return $this->redirectToRoute('index');
+            $this->addFlash('success', 'Zaaktualizowano posta');
+            return $this->redirectToRoute('dashboard');
         }
 
         return $this->render('post/edit.html.twig', [

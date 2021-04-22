@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\FavouritePostsRepository;
+use App\Repository\FavouritePostRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=FavouritePostsRepository::class)
+ * @ORM\Entity(repositoryClass=FavouritePostRepository::class)
  */
-class FavouritePosts
+class FavouritePost
 {
     /**
      * @ORM\Id
@@ -18,13 +18,13 @@ class FavouritePosts
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="favouritePosts")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="favouritePost")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
     /**
-     * @ORM\OneToOne(targetEntity=Post::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Post::class, inversedBy="favouritePost")
      * @ORM\JoinColumn(nullable=false)
      */
     private $post;

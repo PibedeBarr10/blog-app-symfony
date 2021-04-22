@@ -38,7 +38,7 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $dataForm = $form->getData();
             $duplicate = $this->userRepository->findOneBy([
-                'username' => $dataForm->getUsername()
+                'email' => $dataForm->getEmail()
             ]);
 
             if (!is_object($duplicate)) {

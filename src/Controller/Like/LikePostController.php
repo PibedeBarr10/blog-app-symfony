@@ -22,8 +22,8 @@ class LikePostController extends AbstractController
         $this->postRepository = $postRepository;
     }
 
-    #[Route('/like/{id}', name: 'like_post', methods: ['GET', 'POST'])]
-    public function likePost(int $id)
+    #[Route('/like/{id}', name: 'like_post', methods: ['GET'])]
+    public function likePost(int $id): Response
     {
         $user = $this->getUser();
         $post = $this->postRepository->find($id);

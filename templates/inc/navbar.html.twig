@@ -12,13 +12,16 @@
                         <a href="{{ path('create_post') }}" class="nav-link">Nowy post</a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{ path('send_newsletter') }}" class="nav-link">Newsletter</a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{ path('app_logout') }}" class="nav-link">Wyloguj się</a>
                     </li>
                 </ul>
             {% elseif is_granted('ROLE_USER') %}
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a href="{{ path('dashboard') }}" class="nav-link">Panel</a>
+                        <a href="{{ path('favourite_posts') }}" class="nav-link">Ulubione</a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ path('app_logout') }}" class="nav-link">Wyloguj się</a>

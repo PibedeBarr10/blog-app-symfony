@@ -1,4 +1,6 @@
-{% extends('base.html.twig') %}
+{% extends 'base.html.twig' %}
+
+{% block title %}Newsletter{% endblock %}
 
 {% block body %}
     {% for label, messages in app.flashes(['danger', 'success']) %}
@@ -9,6 +11,8 @@
         {% endfor %}
     {% endfor %}
 
-    <h1>Twoje informacje</h1>
-
+    <h1 class="h3 mb-3 font-weight-normal">Wyślij newsletter</h1>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
 {% endblock %}

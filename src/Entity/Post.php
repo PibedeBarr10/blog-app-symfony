@@ -40,9 +40,26 @@ class Post
      */
     private $likes;
 
+    /**
+     * @ORM\OneToMany(targetEntity=FavouritePost::class, mappedBy="post")   # orphanRemoval=true - usuwa wszystkie powiązane ulubione posty
+     */
+    private $favouritePosts;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="post")
+     */
+    private $comments;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $visible;
+
     public function __construct()
     {
         $this->likes = new ArrayCollection();
+        $this->favouritePosts = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -112,6 +129,78 @@ class Post
                 $like->setPost(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|FavouritePost[]
+     */
+    public function getFavouritePosts(): Collection
+    {
+        return $this->favouritePosts;
+    }
+
+    public function addFavouritePost(FavouritePost $favouritePost): self
+    {
+        if (!$this->favouritePosts->contains($favouritePost)) {
+            $this->favouritePosts[] = $favouritePost;
+            $favouritePost->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavouritePost(FavouritePost $favouritePost): self
+    {
+        if ($this->favouritePosts->removeElement($favouritePost)) {
+            // set the owning side to null (unless already changed)
+            if ($favouritePost->getPost() === $this) {
+                $favouritePost->setPost(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getPost() === $this) {
+                $comment->setPost(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getVisible(): ?bool
+    {
+        return $this->visible;
+    }
+
+    public function setVisible(bool $visible): self
+    {
+        $this->visible = $visible;
 
         return $this;
     }

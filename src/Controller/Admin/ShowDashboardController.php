@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Controller\Post;
+namespace App\Controller\Admin;
 
 
 use App\Repository\FavouritePostRepository;
@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ShowAllPostsController extends AbstractController
+class ShowDashboardController extends AbstractController
 {
     private PostRepository $postRepostiory;
     private LikeRepository $likeRepository;
@@ -27,28 +27,13 @@ class ShowAllPostsController extends AbstractController
         $this->favouritePostRepository = $favouritePostRepository;
     }
 
-    #[Route('/', name: 'index', methods: ['GET'])]
+    #[Route('/admin/posts/', name: 'dashboard', methods: ['GET'])]
     public function showPosts(): Response
     {
         $posts = $this->postRepostiory->findAll();
 
-        if (!$this->getUser()) {
-            return $this->render('post/index.html.twig', [
-                'posts' => $posts
-            ]);
-        }
-
-        if(in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
-            return $this->redirectToRoute('dashboard');
-        }
-
-        $likedPosts = $this->likeRepository->postsLikedByUser($this->getUser());
-        $favouritePosts = $this->favouritePostRepository->favouriteUserPosts($this->getUser());
-
-        return $this->render('post/index.html.twig', [
-            'posts' => $posts,
-            'likedPosts' => $likedPosts,
-            'favouritePosts' => $favouritePosts
+        return $this->render('dashboard/index.html.twig', [
+            'posts' => $posts
         ]);
     }
 }

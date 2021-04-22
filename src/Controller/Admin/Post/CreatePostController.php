@@ -34,11 +34,12 @@ class CreatePostController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $post->setCreationDate(new DateTimeImmutable());
+            $post->setVisible(true);
 
             $this->postRepository->save($post);
 
             $this->addFlash('success', 'Utworzono nowego posta');
-            return $this->redirectToRoute('index');
+            return $this->redirectToRoute('dashboard');
         }
 
         return $this->render('post/create.html.twig', [

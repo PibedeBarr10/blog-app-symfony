@@ -21,7 +21,12 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string", length=255, unique=true)
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(type="string", length=180)
      */
     private $username;
 
@@ -37,7 +42,7 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity=FavouritePosts::class, mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=FavouritePost::class, mappedBy="user", orphanRemoval=true)
      */
     private $favouritePosts;
 
@@ -48,13 +53,26 @@ class User implements UserInterface
 
     public function __construct()
     {
-        $this->favouritePosts = new ArrayCollection();
+        $this->favouritePost = new ArrayCollection();
         $this->likes = new ArrayCollection();
+        $this->favouritePosts = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
     }
 
     /**
@@ -129,26 +147,26 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|FavouritePosts[]
+     * @return Collection|FavouritePost[]
      */
-    public function getFavouritePosts(): Collection
+    public function getFavouritePost(): Collection
     {
         return $this->favouritePosts;
     }
 
-    public function addFavouritePost(FavouritePosts $favouritePost): self
+    public function addFavouritePost(FavouritePost $favouritePost): self
     {
-        if (!$this->favouritePosts->contains($favouritePost)) {
-            $this->favouritePosts[] = $favouritePost;
+        if (!$this->favouritePost->contains($favouritePost)) {
+            $this->favouritePost[] = $favouritePost;
             $favouritePost->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeFavouritePost(FavouritePosts $favouritePost): self
+    public function removeFavouritePost(FavouritePost $favouritePost): self
     {
-        if ($this->favouritePosts->removeElement($favouritePost)) {
+        if ($this->favouritePost->removeElement($favouritePost)) {
             // set the owning side to null (unless already changed)
             if ($favouritePost->getUser() === $this) {
                 $favouritePost->setUser(null);
@@ -186,5 +204,13 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|FavouritePost[]
+     */
+    public function getFavouritePosts(): Collection
+    {
+        return $this->favouritePosts;
     }
 }

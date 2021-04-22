@@ -45,6 +45,18 @@ class LikeRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function postsLikedByUser(User $user): array
+    {
+        $likes = $this->isLikedByUser($user);
+
+        $likedPosts = [];
+        foreach ($likes as $like) {
+            $likedPosts[] = $like->getPost();
+        }
+
+        return $likedPosts;
+    }
+
     // /**
     //  * @return Like[] Returns an array of Like objects
     //  */

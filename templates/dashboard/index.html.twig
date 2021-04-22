@@ -1,0 +1,50 @@
+{% extends('base.html.twig') %}
+
+{% block body %}
+    {% for label, messages in app.flashes(['danger', 'success']) %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <h1>Zarządzaj postami</h1>
+
+    <div id="posts">
+        {% for post in posts %}
+            <div class="mb-3">
+                <h3><a href="{{ path('show_post', {id: post.id}) }}" class="text-dark">{{ post.title }}</a></h3>
+                <span class="btn bg-warning rounded-pill">Polubienia: {{ post.likes.count }}</span>
+                <span>Widoczność: {{ post.visible }}</span>
+                <div class="float-right">
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('change_visibility', {id: post.id}) }}" class="btn btn-info">Zmień widoczność</a>
+                        <a href="{{ path('edit_post', {id: post.id}) }}" class="btn btn-info">Edytuj</a>
+                        <a href="#" data-id="{{ post.id }}" class="btn btn-danger delete-post">Usuń post</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        const table = document.getElementById('posts')
+
+        if (table) {
+            table.addEventListener('click', e => {
+                if (e.target.className === 'btn btn-danger delete-post') {
+                    let id = e.target.getAttribute('data-id')
+
+                    console.log(id)
+
+                    fetch(`/admin/post/delete/` + id, {
+                        method: 'DELETE'
+                    }).then(res => window.location.reload())
+                }
+            })
+        }
+    </script>
+{% endblock %}

@@ -11,23 +11,28 @@
 
     <h1>Strona główna</h1>
 
-    {% for post in posts %}
-        <div class="mb-3">
-            <h3><a href="{{ path('show_post', {id: post.id}) }}" class="text-dark">{{ post.title }}</a></h3>
-            <span class="btn bg-warning rounded-pill">Polubienia: {{ post.likes.count }}</span>
-            {% if is_granted('ROLE_USER') %}
-                {% set var = false %}
-                {% for liked in likedPosts %}
-                    {% if liked.post is same as(post) %}
-                        <a href="{{ path('like_post', {id: post.id}) }}" class="btn btn-warning">Usuń like'a</a>
-                        {% set var = true %}
-                    {% endif %}
-                {% endfor %}
+    <div id="posts">
+        {% for post in posts %}
+            {% if post.visible %}
+                <div class="mb-3">
+                    <h3><a href="{{ path('show_post', {id: post.id}) }}" class="text-dark">{{ post.title }}</a></h3>
+                    <span class="btn bg-warning rounded-pill">Polubienia: {{ post.likes.count }}</span>
+                    <span>Widoczność: {{ post.visible }}</span>
+                    <div class="float-right">
+                        {% if is_granted('ROLE_USER') %}
+                            {% if post in likedPosts %}
+                                <a href="{{ path('like_post', {id: post.id}) }}" class="btn btn-warning">Usuń like'a</a>
+                            {% else %}
+                                <a href="{{ path('like_post', {id: post.id}) }}" class="btn btn-warning">Like</a>
+                            {% endif %}
 
-                {% if var is same as(false) %}
-                    <a href="{{ path('like_post', {id: post.id}) }}" class="btn btn-warning">Like</a>
-                {% endif %}
+                            {% if post not in favouritePosts %}
+                                <a href="{{ path('add_to_favourite', {id: post.id}) }}" class="btn btn-info">Dodaj do ulubionych</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
             {% endif %}
-        </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
 {% endblock %}

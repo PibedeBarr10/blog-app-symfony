@@ -16,12 +16,14 @@ class CreatePostFormType extends AbstractType
         $builder
             ->add('title', TextType::class, [
                 'label' => 'Tytuł:',
+                'required' => true,
                 'attr' => [
                     'class' => 'form-control'
                 ]
             ])
             ->add('body', TextType::class, [
                 'label' => 'Treść:',
+                'required' => true,
                 'attr' => [
                     'class' => 'form-control'
                 ]

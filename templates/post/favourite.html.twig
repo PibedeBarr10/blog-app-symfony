@@ -1,0 +1,43 @@
+{% extends('base.html.twig') %}
+
+{% block body %}
+    {% for label, messages in app.flashes(['danger', 'success']) %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <h2>Ulubione posty</h2>
+    <div id="posts">
+        {% for post in favouritePosts %}
+            <div class="mb-3">
+                <h3><a href="{{ path('show_post', {id: post.id}) }}" class="text-dark">{{ post.title }}</a></h3>
+                <span class="btn bg-warning rounded-pill">Polubienia: {{ post.likes.count }}</span>
+                <div class="float-right">
+                    <a href="#" data-id="{{ post.id }}" class="btn btn-info delete-fav">Usuń z ulubionych</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        const table = document.getElementById('posts')
+
+        if (table) {
+            table.addEventListener('click', e => {
+                if (e.target.className === 'btn btn-info delete-fav') {
+                    let id = e.target.getAttribute('data-id')
+
+                    fetch(`/favourite/delete/` + id, {
+                        method: 'DELETE'
+                    }).then(window.location.reload())
+                }
+            })
+        }
+    </script>
+{% endblock %}
