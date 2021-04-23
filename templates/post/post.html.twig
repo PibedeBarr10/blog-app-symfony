@@ -20,7 +20,7 @@
                 <div class="mt-2">
                     <h6>{{ comment.author }}
                         {% if not comment.createdByUser %}
-                            <span>(gość)</span>
+                            <span class="text-secondary">(gość)</span>
                         {% endif %}
                     </h6>
                     <p>{{ comment.body }}</p>

@@ -28,6 +28,11 @@ class LikePostController extends AbstractController
         $user = $this->getUser();
         $post = $this->postRepository->find($id);
 
+        if (!$post || !$post->getVisible()) {
+            $this->addFlash('danger', 'Nie ma takiego posta!');
+            return $this->redirectToRoute('index');
+        }
+
         $like = $this->likeRepository->findOneBy([
             'post' => $post,
             'user' => $user
@@ -35,13 +40,14 @@ class LikePostController extends AbstractController
 
         if ($like) {
             $this->likeRepository->remove($like);
-        } else {
-            $like = new Like();
-            $like->setPost($post);
-            $like->setUser($user);
-
-            $this->likeRepository->save($like);
+            return $this->redirectToRoute('index');
         }
+
+        $like = new Like();
+        $like->setPost($post);
+        $like->setUser($user);
+
+        $this->likeRepository->save($like);
 
         return $this->redirectToRoute('index');
     }

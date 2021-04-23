@@ -24,11 +24,9 @@ class DeletePostFromFavouriteController extends AbstractController
     #[Route('/favourite/delete/{id}', name: 'delete_from_favourite', methods: ['DELETE'])]
     public function delete_from_favourite(int $id): Response
     {
-        $post = $this->postRepository->findOneBy([
-            'id' => $id
-        ]);
+        $post = $this->postRepository->find($id);
 
-        if (!$post) {
+        if (!$post || !$post->getVisible()) {
             $this->addFlash('danger', 'Nie ma takiego posta');
             $this->redirectToRoute('favourite_posts');
         }

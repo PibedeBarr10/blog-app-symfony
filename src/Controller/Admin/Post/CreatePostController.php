@@ -4,7 +4,6 @@
 namespace App\Controller\Admin\Post;
 
 
-use App\Entity\Like;
 use App\Entity\Post;
 use App\Form\CreatePostFormType;
 use App\Repository\PostRepository;

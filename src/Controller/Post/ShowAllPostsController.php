@@ -30,7 +30,9 @@ class ShowAllPostsController extends AbstractController
     #[Route('/', name: 'index', methods: ['GET'])]
     public function showPosts(): Response
     {
-        $posts = $this->postRepostiory->findAll();
+        $posts = $this->postRepostiory->findBy([
+            'visible' => true
+        ]);
 
         if (!$this->getUser()) {
             return $this->render('post/index.html.twig', [

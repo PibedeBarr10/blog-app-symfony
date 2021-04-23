@@ -40,7 +40,9 @@ class FavouritePostRepository extends ServiceEntityRepository
 
         $favouritePosts = [];
         foreach ($addedToFav as $post) {
-            $favouritePosts[] = $post->getPost();
+            if ($post->getPost()->getVisible()) {
+                $favouritePosts[] = $post->getPost();
+            }
         }
 
         return $favouritePosts;

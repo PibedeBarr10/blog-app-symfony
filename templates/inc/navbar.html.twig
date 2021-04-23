@@ -1,6 +1,10 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-success mb-3">
     <div class="container">
-        <a href="{{ path('index') }}" class="navbar-brand">Blog</a>
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('dashboard') }}" class="navbar-brand">Blog</a>
+        {% else %}
+            <a href="{{ path('index') }}" class="navbar-brand">Blog</a>
+        {% endif %}
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">
             <span class="navbar-toggle-icon"></span>
         </button>

@@ -28,6 +28,11 @@ class AddPostToFavouriteController extends AbstractController
         $user = $this->getUser();
         $post = $this->postRepository->find($id);
 
+        if (!$post || !$post->getVisible()) {
+            $this->addFlash('danger', 'Nie ma takiego posta');
+            $this->redirectToRoute('index');
+        }
+
         $isFavourite = $this->favouritePostRepository->findOneBy([
             'post' => $post,
             'user' => $user
@@ -35,12 +40,14 @@ class AddPostToFavouriteController extends AbstractController
 
         if (!$isFavourite) {
             $favouritePost = new FavouritePost();
+
             $favouritePost->setUser($user);
             $favouritePost->setPost($post);
 
             $this->favouritePostRepository->save($favouritePost);
         }
 
+        $this->addFlash('success', 'Dodano do ulubionych!');
         return $this->redirectToRoute('index');
     }
 }

@@ -23,11 +23,6 @@ class EditPostController extends AbstractController
     #[Route('/admin/post/edit/{id}', name: 'edit_post', methods: ['GET', 'POST'])]
     public function editPost(Request $request, int $id): Response
     {
-        if(!in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
-            $this->addFlash('danger', 'Nie masz uprawnień');
-            return $this->redirectToRoute('index');
-        }
-
         $post = $this->postRepository->find($id);
 
         if (!$post) {

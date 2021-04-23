@@ -51,7 +51,9 @@ class LikeRepository extends ServiceEntityRepository
 
         $likedPosts = [];
         foreach ($likes as $like) {
-            $likedPosts[] = $like->getPost();
+            if ($like->getPost()->getVisible()) {
+                $likedPosts[] = $like->getPost();
+            }
         }
 
         return $likedPosts;

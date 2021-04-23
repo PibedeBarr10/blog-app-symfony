@@ -34,11 +34,6 @@ class DeletePostController extends AbstractController
     #[Route('/admin/post/delete/{id}', name: 'delete_post', methods: ['DELETE'])]
     public function delete_post(int $id): Response
     {
-        if(!in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
-            $this->addFlash('danger', 'Nie masz uprawnień');
-            return $this->redirectToRoute('index');
-        }
-
         $post = $this->postRepository->find($id);
 
         if (!$post) {
