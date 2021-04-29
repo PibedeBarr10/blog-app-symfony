@@ -17,7 +17,7 @@ class SendRequest
         $this->parameterBag = $parameterBag;
     }
 
-    public function sendRequest(User $user, string $data): string
+    public function sendRequest(array $emails, string $data): string
     {
         $httpClient = HttpClient::create([
             'auth_basic' => [
@@ -30,7 +30,7 @@ class SendRequest
             $this->parameterBag->get('api_url'),
             [
                 'json' => [
-                    'email' => $user->getEmail(),
+                    'emails' => $emails,
                     'newsletter_data' => $data
                 ]
             ]

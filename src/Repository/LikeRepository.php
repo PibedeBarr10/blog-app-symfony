@@ -33,11 +33,12 @@ class LikeRepository extends ServiceEntityRepository
         $this->_em->flush();
     }
 
-    public function isLikedByUser(User $user)
+    public function postsLikedByUser(User $user): array
     {
         $qb = $this->getEntityManager()->createQueryBuilder()
-            ->select('l')
+            ->select('p')
             ->from('App:Like', 'l')
+            ->innerJoin('App:Post', 'p', 'WITH', 'p.id = l.post')
             ->where('l.user = :user')
             ->setParameter('user', $user)
         ;
@@ -45,46 +46,13 @@ class LikeRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function postsLikedByUser(User $user): array
-    {
-        $likes = $this->isLikedByUser($user);
+    public function removeAllByPostId(Post $post) {
+        $likes = $this->findBy([
+            'post' => $post
+        ]);
 
-        $likedPosts = [];
         foreach ($likes as $like) {
-            if ($like->getPost()->getVisible()) {
-                $likedPosts[] = $like->getPost();
-            }
+            $this->remove($like);
         }
-
-        return $likedPosts;
     }
-
-    // /**
-    //  * @return Like[] Returns an array of Like objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('l.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Like
-    {
-        return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

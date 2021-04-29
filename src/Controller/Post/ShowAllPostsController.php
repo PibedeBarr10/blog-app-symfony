@@ -21,7 +21,8 @@ class ShowAllPostsController extends AbstractController
         PostRepository $postRepostiory,
         LikeRepository $likeRepository,
         FavouritePostRepository $favouritePostRepository
-    ) {
+    )
+    {
         $this->postRepostiory = $postRepostiory;
         $this->likeRepository = $likeRepository;
         $this->favouritePostRepository = $favouritePostRepository;
@@ -45,7 +46,7 @@ class ShowAllPostsController extends AbstractController
         }
 
         $likedPosts = $this->likeRepository->postsLikedByUser($this->getUser());
-        $favouritePosts = $this->favouritePostRepository->favouriteUserPosts($this->getUser());
+        $favouritePosts = $this->favouritePostRepository->getUserFavouritePosts($this->getUser());
 
         return $this->render('post/index.html.twig', [
             'posts' => $posts,

@@ -57,6 +57,9 @@ class Post
 
     public function __construct()
     {
+        $this->creation_date = new \DateTimeImmutable();
+        $this->visible = true;
+
         $this->likes = new ArrayCollection();
         $this->favouritePosts = new ArrayCollection();
         $this->comments = new ArrayCollection();
@@ -203,5 +206,14 @@ class Post
         $this->visible = $visible;
 
         return $this;
+    }
+
+    public function changeVisibility()
+    {
+        if ($this->getVisible()) {
+            $this->setVisible(false);
+        } else {
+            $this->setVisible(true);
+        }
     }
 }

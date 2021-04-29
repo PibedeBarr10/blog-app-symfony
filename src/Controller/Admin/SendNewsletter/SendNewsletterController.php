@@ -17,7 +17,10 @@ class SendNewsletterController extends AbstractController
     private UserRepository $userRepository;
     private SendRequest $sendRequest;
 
-    public function __construct(UserRepository $userRepository, SendRequest $sendRequest)
+    public function __construct(
+        UserRepository $userRepository,
+        SendRequest $sendRequest
+    )
     {
         $this->userRepository = $userRepository;
         $this->sendRequest = $sendRequest;
@@ -30,24 +33,21 @@ class SendNewsletterController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $emails = $this->userRepository->getUsersEmails();
             $mail_data = $form->get('body')->getData();
 
-            $users = $this->userRepository->findAll();
-
-            foreach ($users as $user) {
-                try {
-                    $this->sendRequest->sendRequest($user, $mail_data);
-                } catch (\Throwable $e) {
-                    $this->addFlash('danger', 'Błąd w wysyłaniu raportów - kod '.$e->getCode());
-                    return $this->redirectToRoute('dashboard');
-                }
+            try {
+                $this->sendRequest->sendRequest($emails, $mail_data);
+            } catch (\Throwable $e) {
+                $this->addFlash('danger', 'Błąd w wysyłaniu raportów - kod '.$e->getCode());
+                return $this->redirectToRoute('dashboard');
             }
 
             $this->addFlash('success', 'Wysłano newsletter!');
             return $this->redirectToRoute('dashboard');
         }
 
-        return $this->render('newsletter/index.html.twig', [
+        return $this->render('admin/newsletter/index.html.twig', [
             'form' => $form->createView()
         ]);
     }

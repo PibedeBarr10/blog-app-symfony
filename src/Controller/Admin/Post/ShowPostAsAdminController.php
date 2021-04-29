@@ -15,7 +15,10 @@ class ShowPostAsAdminController extends AbstractController
     private PostRepository $postRepository;
     private CommentRepository $commentRepository;
 
-    public function __construct(PostRepository $postRepository, CommentRepository $commentRepository)
+    public function __construct(
+        PostRepository $postRepository,
+        CommentRepository $commentRepository
+    )
     {
         $this->postRepository = $postRepository;
         $this->commentRepository = $commentRepository;

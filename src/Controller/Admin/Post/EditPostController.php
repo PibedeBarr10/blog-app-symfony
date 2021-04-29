@@ -41,9 +41,8 @@ class EditPostController extends AbstractController
             return $this->redirectToRoute('dashboard');
         }
 
-        return $this->render('post/edit.html.twig', [
-            'form' => $form->createView(),
-            'post' => $post
+        return $this->render('admin/post/edit.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 }

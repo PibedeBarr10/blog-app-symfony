@@ -23,11 +23,7 @@ class ChangeVisibilityController extends AbstractController
     {
         $post = $this->postRepository->find($id);
 
-        if ($post->getVisible()) {
-            $post->setVisible(false);
-        } else {
-            $post->setVisible(true);
-        }
+        $post->changeVisibility();
 
         $this->postRepository->save($post);
 

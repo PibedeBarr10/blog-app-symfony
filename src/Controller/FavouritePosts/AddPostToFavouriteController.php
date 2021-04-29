@@ -16,7 +16,10 @@ class AddPostToFavouriteController extends AbstractController
     private PostRepository $postRepository;
     private FavouritePostRepository $favouritePostRepository;
 
-    public function __construct(PostRepository $postRepository, FavouritePostRepository $favouritePostRepository)
+    public function __construct(
+        PostRepository $postRepository,
+        FavouritePostRepository $favouritePostRepository
+    )
     {
         $this->postRepository = $postRepository;
         $this->favouritePostRepository = $favouritePostRepository;

@@ -21,9 +21,9 @@ class ShowFavoutivePostsController extends AbstractController
     #[Route('/favourite', name: 'favourite_posts', methods: ['GET'])]
     public function favourite_posts(): Response
     {
-        $favouritePosts = $this->favouritePostRepository->favouriteUserPosts($this->getUser());
+        $favouritePosts = $this->favouritePostRepository->getUserFavouritePosts($this->getUser());
 
-        return $this->render('post/favourite.html.twig', [
+        return $this->render('favouritePost/index.html.twig', [
             'favouritePosts' => $favouritePosts
         ]);
     }

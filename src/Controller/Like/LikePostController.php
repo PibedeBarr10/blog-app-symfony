@@ -16,7 +16,10 @@ class LikePostController extends AbstractController
     private LikeRepository $likeRepository;
     private PostRepository $postRepository;
 
-    public function __construct(LikeRepository $likeRepository, PostRepository $postRepository)
+    public function __construct(
+        LikeRepository $likeRepository,
+        PostRepository $postRepository
+    )
     {
         $this->likeRepository = $likeRepository;
         $this->postRepository = $postRepository;

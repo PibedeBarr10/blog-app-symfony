@@ -23,7 +23,7 @@ class ShowDashboardController extends AbstractController
     {
         $posts = $this->postRepostiory->findAll();
 
-        return $this->render('dashboard/index.html.twig', [
+        return $this->render('admin/dashboard/index.html.twig', [
             'posts' => $posts
         ]);
     }

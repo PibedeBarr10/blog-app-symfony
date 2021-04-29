@@ -32,11 +32,10 @@
         const table = document.getElementById('posts')
 
         if (table) {
+
             table.addEventListener('click', e => {
                 if (e.target.className === 'btn btn-danger delete-post') {
                     let id = e.target.getAttribute('data-id')
-
-                    console.log(id)
 
                     fetch(`/admin/post/delete/` + id, {
                         method: 'DELETE'

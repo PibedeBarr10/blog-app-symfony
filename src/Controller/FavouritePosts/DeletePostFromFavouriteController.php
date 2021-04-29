@@ -15,7 +15,10 @@ class DeletePostFromFavouriteController extends AbstractController
     private FavouritePostRepository $favouritePostRepository;
     private PostRepository $postRepository;
 
-    public function __construct(FavouritePostRepository $favouritePostRepository, PostRepository $postRepository)
+    public function __construct(
+        FavouritePostRepository $favouritePostRepository,
+        PostRepository $postRepository
+    )
     {
         $this->favouritePostRepository = $favouritePostRepository;
         $this->postRepository = $postRepository;

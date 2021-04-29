@@ -30,10 +30,6 @@
     </div>
 
     <div class="mt-3">
-        {% if is_granted('ROLE_USER') %}
-            <a href="{{ path('add_comment', {id: post.id}) }}" class="btn btn-info">Dodaj komentarz</a>
-        {% else %}
-            <a href="{{ path('add_comment_anonymously', {id: post.id}) }}" class="btn btn-info">Dodaj komentarz</a>
-        {% endif %}
+        <a href="{{ path('add_comment', {id: post.id}) }}" class="btn btn-info">Dodaj komentarz</a>
     </div>
 {% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\FavouritePost;
+use App\Entity\Post;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -32,7 +33,7 @@ class FavouritePostRepository extends ServiceEntityRepository
         $this->_em->flush();
     }
 
-    public function favouriteUserPosts(User $user): array
+    public function getUserFavouritePosts(User $user): array
     {
         $addedToFav = $this->findBy([
             'user' => $user
@@ -48,32 +49,13 @@ class FavouritePostRepository extends ServiceEntityRepository
         return $favouritePosts;
     }
 
-    // /**
-    //  * @return FavouritePosts[] Returns an array of FavouritePosts objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('f.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+    public function removeAllByPostId(Post $post) {
+        $favPosts = $this->findBy([
+            'post' => $post
+        ]);
 
-    /*
-    public function findOneBySomeField($value): ?FavouritePosts
-    {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        foreach ($favPosts as $fav) {
+            $this->remove($fav);
+        }
     }
-    */
 }

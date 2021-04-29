@@ -24,7 +24,8 @@ class DeletePostController extends AbstractController
         LikeRepository $likeRepository,
         FavouritePostRepository $favouritePostRepository,
         CommentRepository $commentRepository
-    ) {
+    )
+    {
         $this->postRepository = $postRepository;
         $this->likeRepository = $likeRepository;
         $this->favouritePostRepository = $favouritePostRepository;
@@ -41,29 +42,9 @@ class DeletePostController extends AbstractController
             return $this->redirectToRoute('dashboard');
         }
 
-        $likes = $this->likeRepository->findBy([
-            'post' => $post
-        ]);
-
-        $favPosts = $this->favouritePostRepository->findBy([
-            'post' => $post
-        ]);
-
-        $comments = $this->commentRepository->findBy([
-            'post' => $post
-        ]);
-
-        foreach ($likes as $like) {
-            $this->likeRepository->remove($like);
-        }
-
-        foreach ($favPosts as $fav) {
-            $this->favouritePostRepository->remove($fav);
-        }
-
-        foreach ($comments as $comment) {
-            $this->commentRepository->remove($comment);
-        }
+        $this->likeRepository->removeAllByPostId($post);
+        $this->favouritePostRepository->removeAllByPostId($post);
+        $this->commentRepository->removeAllByPostId($post);
 
         $this->postRepository->remove($post);
 
