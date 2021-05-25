@@ -20,7 +20,9 @@ class EditPostController extends AbstractController
         $this->postRepository = $postRepository;
     }
 
-    #[Route('/admin/post/edit/{id}', name: 'edit_post', methods: ['GET', 'POST'])]
+    /**
+     * @Route("/admin/post/edit/{id}", name="edit_post", methods={"GET", "POST"})
+     */
     public function editPost(Request $request, int $id): Response
     {
         $post = $this->postRepository->find($id);

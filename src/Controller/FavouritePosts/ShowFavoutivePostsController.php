@@ -18,7 +18,9 @@ class ShowFavoutivePostsController extends AbstractController
         $this->favouritePostRepository = $favouritePostRepository;
     }
 
-    #[Route('/favourite', name: 'favourite_posts', methods: ['GET'])]
+    /**
+     * @Route("/favourite", name="favourite_posts", methods={"GET"})
+     */
     public function favourite_posts(): Response
     {
         $favouritePosts = $this->favouritePostRepository->getUserFavouritePosts($this->getUser());

@@ -24,7 +24,9 @@ class ShowPostAsAdminController extends AbstractController
         $this->commentRepository = $commentRepository;
     }
 
-    #[Route('/admin/post/{id}', name: 'show_post_as_admin', methods: ['GET'])]
+    /**
+     * @Route("/admin/post/{id}", name="show_post_as_admin", methods={"GET"})
+     */
     public function showPost(int $id): Response
     {
         $post = $this->postRepository->find($id);

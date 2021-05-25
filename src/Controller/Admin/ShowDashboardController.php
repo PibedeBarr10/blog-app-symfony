@@ -18,7 +18,9 @@ class ShowDashboardController extends AbstractController
         $this->postRepostiory = $postRepostiory;
     }
 
-    #[Route('/admin/', name: 'dashboard', methods: ['GET'])]
+    /**
+     * @Route("/admin/", name="dashboard", methods={"GET"})
+     */
     public function showPosts(): Response
     {
         $posts = $this->postRepostiory->findAll();

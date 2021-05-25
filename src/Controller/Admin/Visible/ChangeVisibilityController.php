@@ -18,7 +18,9 @@ class ChangeVisibilityController extends AbstractController
         $this->postRepository = $postRepository;
     }
 
-    #[Route('/admin/changeVisibility/{id}', name: 'change_visibility', methods: ['GET'])]
+    /**
+     * @Route("/admin/changeVisibility/{id}", name="change_visibility", methods={"GET"})
+     */
     public function changeVisibility(int $id): Response
     {
         $post = $this->postRepository->find($id);

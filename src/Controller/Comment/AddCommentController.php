@@ -28,7 +28,9 @@ class AddCommentController extends AbstractController
         $this->commentRepository = $commentRepository;
     }
 
-    #[Route('/post/{id}/comment/add', name: 'add_comment', methods: ['GET', 'POST'])]
+    /**
+     * @Route("/post/{id}/comment/add", name="add_comment", methods={"GET", "POST"})
+     */
     public function add_comment(Request $request, int $id): Response
     {
         $post = $this->postRepository->find($id);

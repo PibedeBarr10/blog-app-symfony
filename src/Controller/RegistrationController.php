@@ -22,7 +22,9 @@ class RegistrationController extends AbstractController
         $this->userRepository = $userRepository;
     }
 
-    #[Route('/register', name: 'registration', methods: ['GET', 'POST'])]
+    /**
+     * @Route("/post/{id}", name="registration", methods={"GET", "POST"})
+     */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         if ($this->getUser()) {

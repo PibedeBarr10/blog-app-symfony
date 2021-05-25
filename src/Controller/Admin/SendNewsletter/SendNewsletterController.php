@@ -26,7 +26,9 @@ class SendNewsletterController extends AbstractController
         $this->sendRequest = $sendRequest;
     }
 
-    #[Route('/admin/sendNewsletter', name: 'send_newsletter', methods: ['GET', 'POST'])]
+    /**
+     * @Route("/admin/sendNewsletter", name="send_newsletter", methods={"GET", "POST"})
+     */
     public function sendNewsletter(Request $request): Response
     {
         $form = $this->createForm(SendNewsletterFormType::class);

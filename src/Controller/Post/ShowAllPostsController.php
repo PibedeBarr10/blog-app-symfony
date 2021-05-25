@@ -28,7 +28,9 @@ class ShowAllPostsController extends AbstractController
         $this->favouritePostRepository = $favouritePostRepository;
     }
 
-    #[Route('/', name: 'index', methods: ['GET'])]
+    /**
+     * @Route("/", name="index", methods={"GET"})
+     */
     public function showPosts(): Response
     {
         $posts = $this->postRepostiory->findBy([

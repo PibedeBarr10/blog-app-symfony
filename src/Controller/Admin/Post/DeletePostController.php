@@ -32,7 +32,9 @@ class DeletePostController extends AbstractController
         $this->commentRepository = $commentRepository;
     }
 
-    #[Route('/admin/post/delete/{id}', name: 'delete_post', methods: ['DELETE'])]
+    /**
+     * @Route("/admin/post/delete/{id}", name="delete_post", methods={"DELETE"})
+     */
     public function delete_post(int $id): Response
     {
         $post = $this->postRepository->find($id);

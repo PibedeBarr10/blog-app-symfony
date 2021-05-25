@@ -22,7 +22,9 @@ class CreatePostController extends AbstractController
         $this->postRepository = $postRepository;
     }
 
-    #[Route('/admin/post/create', name: 'create_post', methods: ['GET', 'POST'])]
+    /**
+     * @Route("/admin/post/create", name="create_post", methods={"GET", "POST"})
+     */
     public function create(Request $request): Response
     {
         $post = new Post();

@@ -24,7 +24,9 @@ class ShowPostController extends AbstractController
         $this->commentRepository = $commentRepository;
     }
 
-    #[Route('/post/{id}', name: 'show_post', methods: ['GET'])]
+    /**
+     * @Route("/post/{id}", name="show_post", methods={"GET"})
+     */
     public function showPost(int $id): Response
     {
         $post = $this->postRepository->find($id);

@@ -25,7 +25,9 @@ class AddPostToFavouriteController extends AbstractController
         $this->favouritePostRepository = $favouritePostRepository;
     }
 
-    #[Route('/favourite/add/{id}', name: 'add_to_favourite', methods: ['GET'])]
+    /**
+     * @Route("/favourite/add/{id}", name="add_to_favourite", methods={"GET"})
+     */
     public function addToFavourite(int $id): Response
     {
         $user = $this->getUser();
