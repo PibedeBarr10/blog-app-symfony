@@ -23,7 +23,7 @@ class RegistrationController extends AbstractController
     }
 
     /**
-     * @Route("/post/{id}", name="registration", methods={"GET", "POST"})
+     * @Route("/register", name="registration", methods={"GET", "POST"})
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
