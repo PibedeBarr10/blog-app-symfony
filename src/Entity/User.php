@@ -51,12 +51,6 @@ class User implements UserInterface
      */
     private $likes;
 
-    /**
-     * @ORM\Column(type="string", length=20)
-     */
-    private $emptyfield;
-
-
     public function __construct()
     {
         $this->favouritePost = new ArrayCollection();
